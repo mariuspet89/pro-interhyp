@@ -23,3 +23,9 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+bootJar {
+	manifest {
+		attributes 'Start-Class': 'eu.accesa.prointerhyp.ProinterhypApplication'
+	}
+}
