@@ -45,7 +45,7 @@ public class DatabasePopulationController {
     public ResponseEntity<List<UserEntity>> insertInDatabase() {
         List<UserEntity> usersToSaveToDb = new ArrayList<>();
 
-        for (int i = 0; i <= 5000; i++) {
+        for (int i = 1; i <= 5000; i++) {
             Collections.shuffle(firstNames);
             Collections.shuffle(lastNames);
             Collections.shuffle(details);
