@@ -1,27 +1,24 @@
 package eu.accesa.prointerhyp.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+import java.time.LocalDate;
+
 @Table(value = "team")
 public class UserEntity {
+
     @PrimaryKey
     private Integer id;
-    private String details;
     @Column(value = "first_name")
     private String firstName;
-    private String name;
-
-    public UserEntity() {
-    }
-
-    public UserEntity(Integer id, String details, String firstName, String name) {
-        this.id = id;
-        this.details = details;
-        this.firstName = firstName;
-        this.name = name;
-    }
+    @Column(value = "last_name")
+    private String lastName;
+    private LocalDate birthday;
+    private String username;
+    private String details;
 
     public Integer getId() {
         return id;
@@ -29,14 +26,6 @@ public class UserEntity {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
     }
 
     public String getFirstName() {
@@ -47,21 +36,47 @@ public class UserEntity {
         this.firstName = firstName;
     }
 
-    public String getName() {
-        return name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     @Override
     public String toString() {
         return "UserEntity{" +
-                "id=" + id +
-                ", details='" + details + '\'' +
+                ", id=" + id +
                 ", firstName='" + firstName + '\'' +
-                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthday=" + birthday +
+                ", username='" + username + '\'' +
+                ", details='" + details + '\'' +
                 '}';
     }
 }
