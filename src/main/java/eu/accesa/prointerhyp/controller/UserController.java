@@ -24,6 +24,7 @@ public class UserController {
         this.userService = userService;
     }
 
+
     @GetMapping()
     public ResponseEntity<List<UserEntity>> getAllUsers() {
         Iterable<UserEntity> result = userRepository.findAll();
