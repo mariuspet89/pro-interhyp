@@ -10,6 +10,10 @@ group = 'eu.accesa'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '12'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation 'org.openapitools:openapi-generator-gradle-plugin:5.0.0'
     implementation 'org.springframework.boot:spring-boot-starter'
@@ -31,5 +35,3 @@ test {
     useJUnitPlatform()
 }
 
-apply plugin: "io.swagger.core.v3.swagger-gradle-plugin"
-apply plugin: "org.openapi.generator"
