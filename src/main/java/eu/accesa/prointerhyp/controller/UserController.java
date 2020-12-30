@@ -1,13 +1,12 @@
 package eu.accesa.prointerhyp.controller;
 
 import eu.accesa.prointerhyp.model.UserEntity;
+import eu.accesa.prointerhyp.model.dto.UserDto;
 import eu.accesa.prointerhyp.repository.UserRepository;
+import eu.accesa.prointerhyp.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +15,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    UserRepository userRepository;
 
-    public UserController(UserRepository userRepository) {
+    UserRepository userRepository;
+    UserService userService;
+
+    public UserController(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @GetMapping()
@@ -28,5 +30,12 @@ public class UserController {
         List<UserEntity> users = new ArrayList<UserEntity>();
         result.forEach(users::add);
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDto> findById(@PathVariable Long id) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
+
     }
 }
