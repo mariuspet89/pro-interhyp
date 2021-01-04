@@ -51,7 +51,7 @@ public class DatabasePopulationController {
             Collections.shuffle(details);
 
             UserEntity userEntity = new UserEntity();
-            userEntity.setId(i);
+            userEntity.setId(UUID.randomUUID());
             userEntity.setDetails(details.get(10));
             userEntity.setLastName(lastNames.get(10));
             userEntity.setBirthday(generateBirthday());

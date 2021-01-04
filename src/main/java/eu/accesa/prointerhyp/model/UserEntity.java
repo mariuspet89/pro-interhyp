@@ -1,17 +1,17 @@
 package eu.accesa.prointerhyp.model;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
-@Table(value = "team")
+@Table(value = "users")
 public class UserEntity {
 
     @PrimaryKey
-    private Integer id;
+    private UUID id;
     @Column(value = "first_name")
     private String firstName;
     @Column(value = "last_name")
@@ -20,11 +20,11 @@ public class UserEntity {
     private String username;
     private String details;
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -71,7 +71,7 @@ public class UserEntity {
     @Override
     public String toString() {
         return "UserEntity{" +
-                ", id=" + id +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthday=" + birthday +
