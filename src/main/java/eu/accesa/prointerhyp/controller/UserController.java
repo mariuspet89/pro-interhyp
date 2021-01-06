@@ -8,8 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -24,6 +26,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDto save(@Valid @RequestBody UserDto userDto){
+        return userService.createUser(userDto);
+    }
 
     @GetMapping()
     public ResponseEntity<List<UserEntity>> getAllUsers() {
@@ -34,9 +41,17 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> findById(@PathVariable Long id) {
+    public ResponseEntity<UserDto> findById(@PathVariable UUID id) {
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
 
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteById(@PathVariable UUID id){
+        userService.deleteUser(id);
+        return ResponseEntity.status(HttpStatus.OK).body("User Deleted");
+    }
+
+
 }
