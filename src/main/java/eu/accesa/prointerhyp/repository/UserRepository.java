@@ -6,11 +6,12 @@ import org.springframework.data.cassandra.repository.CassandraRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface UserRepository extends CassandraRepository<UserEntity, Long> {
+public interface UserRepository extends CassandraRepository<UserEntity,UUID > {
 
     List<UserEntity> findAll();
     @AllowFiltering
-    Optional<UserEntity> findById(Long id);
+    Optional<UserEntity> findById(UUID id);
 
 }

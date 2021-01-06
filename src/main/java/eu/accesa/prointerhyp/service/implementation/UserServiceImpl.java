@@ -10,11 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
+import java.util.UUID;
+
 @Service
 public class UserServiceImpl implements UserService {
 
 
-   private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
 
@@ -26,11 +28,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto findById(Long id) {
+    public UserDto findById(UUID id) {
 
         LOGGER.info("Searching for the User with the following ID: " + id);
         UserEntity userEntity = userRepository.findById(id).orElseThrow();
 
         return modelMapper.map(userEntity, UserDto.class);
     }
+
+    @Override
+    public void deleteUser(UUID id) {
+        LOGGER.info("Deleting the User with the following ID: " + id);
+        UserEntity userEntity = userRepository.findById(id).orElseThrow();
+        userRepository.delete(userEntity);
+
+    }
+
+    @Override
+    public UserDto createUser(UserDto userDto) {
+
+        LOGGER.info("Creating User ");
+
+        UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
+
+        userEntity.setId(UUID.randomUUID());
+
+        UserEntity userEntitySaved = userRepository.save(userEntity);
+
+        UserDto savedDto = modelMapper.map(userEntitySaved, UserDto.class);
+
+        return savedDto;
+
+
+    }
+
+
 }
