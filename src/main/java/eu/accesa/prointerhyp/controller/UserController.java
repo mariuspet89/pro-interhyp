@@ -53,5 +53,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("User Deleted");
     }
 
+    @PutMapping
+    public ResponseEntity<UserDto> update(@Valid @RequestBody UserDto userDto)  {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(userDto));
+    }
 
 }

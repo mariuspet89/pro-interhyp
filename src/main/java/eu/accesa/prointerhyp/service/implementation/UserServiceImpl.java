@@ -27,22 +27,6 @@ public class UserServiceImpl implements UserService {
         this.modelMapper = modelMapper;
     }
 
-    @Override
-    public UserDto findById(UUID id) {
-
-        LOGGER.info("Searching for the User with the following ID: " + id);
-        UserEntity userEntity = userRepository.findById(id).orElseThrow();
-
-        return modelMapper.map(userEntity, UserDto.class);
-    }
-
-    @Override
-    public void deleteUser(UUID id) {
-        LOGGER.info("Deleting the User with the following ID: " + id);
-        UserEntity userEntity = userRepository.findById(id).orElseThrow();
-        userRepository.delete(userEntity);
-
-    }
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -61,6 +45,43 @@ public class UserServiceImpl implements UserService {
 
 
     }
+
+
+    @Override
+    public UserDto findById(UUID id) {
+
+        LOGGER.info("Searching for the User with the following ID: " + id);
+        UserEntity userEntity = userRepository.findById(id).orElseThrow();
+
+        return modelMapper.map(userEntity, UserDto.class);
+    }
+
+
+    @Override
+    public UserDto updateUser(UserDto userDto){
+
+        LOGGER.info("Updating User " + userDto.getId());
+
+        UserEntity userEntity =userRepository.findById(userDto.getId()).orElseThrow();
+
+        modelMapper.map(userDto, userEntity);
+
+        userRepository.save(userEntity);
+
+        return modelMapper.map(userEntity, UserDto.class);
+    }
+
+    @Override
+    public void deleteUser(UUID id) {
+        LOGGER.info("Deleting the User with the following ID: " + id);
+        UserEntity userEntity = userRepository.findById(id).orElseThrow();
+        userRepository.delete(userEntity);
+
+    }
+
+
+
+
 
 
 }
