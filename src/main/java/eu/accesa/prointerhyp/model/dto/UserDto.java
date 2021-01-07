@@ -9,7 +9,7 @@ public class UserDto {
     private String details;
     private String firstName;
     private String lastName;
-    private LocalDate birthdate;
+    private LocalDate birthday;
     private String username;
 
     public UUID getId() {
@@ -36,11 +36,11 @@ public class UserDto {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    public LocalDate getBirthdate() {
-        return birthdate;
+    public LocalDate getBirthday() {
+        return birthday;
     }
-    public void setBirthdate(LocalDate birthdate) {
-        this.birthdate = birthdate;
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
     public String getUsername() {
         return username;
