@@ -8,10 +8,12 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 
-@Table(value = "users_by_birthday")
+@Table(value = "users_new")
 public class UserEntity {
 
     @PrimaryKey
+    private String company;
+    @Column
     private UUID id;
     @Column(value = "first_name")
     private String firstName;
@@ -20,6 +22,14 @@ public class UserEntity {
     private LocalDate birthday;
     private String username;
     private String details;
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
 
     public UUID getId() {
         return id;
@@ -67,17 +77,5 @@ public class UserEntity {
 
     public void setDetails(String details) {
         this.details = details;
-    }
-
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthday=" + birthday +
-                ", username='" + username + '\'' +
-                ", details='" + details + '\'' +
-                '}';
     }
 }

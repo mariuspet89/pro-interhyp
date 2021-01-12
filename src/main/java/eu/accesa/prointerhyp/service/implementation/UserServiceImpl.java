@@ -4,17 +4,18 @@ import eu.accesa.prointerhyp.model.UserEntity;
 import eu.accesa.prointerhyp.model.dto.UserDto;
 import eu.accesa.prointerhyp.repository.UserRepository;
 import eu.accesa.prointerhyp.service.UserService;
-
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.modelmapper.ModelMapper;
 
+import java.util.List;
 import java.util.UUID;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class UserServiceImpl implements UserService {
-
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -26,7 +27,6 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
-
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -42,10 +42,7 @@ public class UserServiceImpl implements UserService {
         UserDto savedDto = modelMapper.map(userEntitySaved, UserDto.class);
 
         return savedDto;
-
-
     }
-
 
     @Override
     public UserDto findById(UUID id) {
@@ -58,11 +55,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserDto updateUser(UserDto userDto){
+    public UserDto updateUser(UserDto userDto) {
 
         LOGGER.info("Updating User " + userDto.getId());
 
-        UserEntity userEntity =userRepository.findById(userDto.getId()).orElseThrow();
+        UserEntity userEntity = userRepository.findById(userDto.getId()).orElseThrow();
 
         modelMapper.map(userDto, userEntity);
 
@@ -72,10 +69,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserDto> findAll() {
+        List<UserEntity> users = userRepository.findAll();
+        return users.stream()
+                .map(user -> modelMapper.map(user, UserDto.class))
+                .collect(toList());
+    }
+
+    @Override
     public void deleteUser(UUID id) {
         LOGGER.info("Deleting the User with the following ID: " + id);
         UserEntity userEntity = userRepository.findById(id).orElseThrow();
         userRepository.delete(userEntity);
-
     }
 }

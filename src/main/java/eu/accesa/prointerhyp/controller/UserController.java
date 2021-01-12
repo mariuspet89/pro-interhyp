@@ -1,6 +1,5 @@
 package eu.accesa.prointerhyp.controller;
 
-import eu.accesa.prointerhyp.model.UserEntity;
 import eu.accesa.prointerhyp.model.dto.UserDto;
 import eu.accesa.prointerhyp.repository.UserRepository;
 import eu.accesa.prointerhyp.service.UserService;
@@ -9,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,11 +31,8 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<UserEntity>> getAllUsers() {
-        Iterable<UserEntity> result = userRepository.findAll();
-        List<UserEntity> users = new ArrayList<UserEntity>();
-        result.forEach(users::add);
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
     }
 
     @GetMapping("/{id}")
