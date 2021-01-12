@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 
-@Table(value = "users_new")
+@Table(value = "users_by_birthday")
 public class UserEntity {
 
     @PrimaryKey
