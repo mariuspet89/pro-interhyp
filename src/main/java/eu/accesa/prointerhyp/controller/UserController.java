@@ -4,18 +4,14 @@ import eu.accesa.prointerhyp.model.dto.SortingAndFilteringDto;
 import eu.accesa.prointerhyp.model.dto.UserDto;
 import eu.accesa.prointerhyp.repository.UserRepository;
 import eu.accesa.prointerhyp.service.UserService;
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
-import org.springframework.data.cassandra.core.query.CassandraPageRequest;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,7 +48,38 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK).body(userDtos);
     }
+    @GetMapping("/first-name")
+    public ResponseEntity<Slice<UserDto>> getAllUsersByFirstName(@RequestBody SortingAndFilteringDto sortingAndFilteringDto) {
+        Slice<UserDto> userDtos = modelMapper.map(userService.filteredFindAll(sortingAndFilteringDto),
+                new TypeToken<Slice<UserDto>>() {
+                }.getType());
 
+        return ResponseEntity.status(HttpStatus.OK).body(userDtos);
+    }
+    @GetMapping("/last-name")
+    public ResponseEntity<Slice<UserDto>> getAllUsersByLastName(@RequestBody SortingAndFilteringDto sortingAndFilteringDto) {
+        Slice<UserDto> userDtos = modelMapper.map(userService.filteredFindAll(sortingAndFilteringDto),
+                new TypeToken<Slice<UserDto>>() {
+                }.getType());
+
+        return ResponseEntity.status(HttpStatus.OK).body(userDtos);
+    }
+    @GetMapping("/details")
+    public ResponseEntity<Slice<UserDto>> getAllUsersByDetails(@RequestBody SortingAndFilteringDto sortingAndFilteringDto) {
+        Slice<UserDto> userDtos = modelMapper.map(userService.filteredFindAll(sortingAndFilteringDto),
+                new TypeToken<Slice<UserDto>>() {
+                }.getType());
+
+        return ResponseEntity.status(HttpStatus.OK).body(userDtos);
+    }
+    @GetMapping("/username")
+    public ResponseEntity<Slice<UserDto>> getAllUsersByUsername(@RequestBody SortingAndFilteringDto sortingAndFilteringDto) {
+        Slice<UserDto> userDtos = modelMapper.map(userService.filteredFindAll(sortingAndFilteringDto),
+                new TypeToken<Slice<UserDto>>() {
+                }.getType());
+
+        return ResponseEntity.status(HttpStatus.OK).body(userDtos);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> findById(@PathVariable UUID id) {

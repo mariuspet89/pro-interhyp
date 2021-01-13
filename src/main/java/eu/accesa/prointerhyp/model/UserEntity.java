@@ -12,9 +12,9 @@ import java.util.UUID;
 public class UserEntity {
 
     @PrimaryKey
-    private String company;
-    @Column
     private UUID id;
+    @Column
+    private String company;
     @Column(value = "first_name")
     private String firstName;
     @Column(value = "last_name")
