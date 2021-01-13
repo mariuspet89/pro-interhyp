@@ -98,22 +98,27 @@ public class UserServiceImpl implements UserService {
                 slice = modelMapper.map(userByBirthdayRepository.findAll(request),
                         new TypeToken<Slice<UserDto>>() {
                         }.getType());
+                break;
             case "details":
                 slice = modelMapper.map(userByDetailsRepository.findAll(request),
                         new TypeToken<Slice<UserDto>>() {
                         }.getType());
+                break;
             case "first_name":
                 slice = modelMapper.map(userByFirstNameRepository.findAll(request),
                         new TypeToken<Slice<UserDto>>() {
                         }.getType());
+                break;
             case "last_name":
-                slice = modelMapper.map(userByFirstNameRepository.findAll(request),
+                slice = modelMapper.map(userByLastNameRepository.findAll(request),
                         new TypeToken<Slice<UserDto>>() {
                         }.getType());
+                break;
             case "username":
                 slice = modelMapper.map(userByUserNameRepository.findAll(request),
                         new TypeToken<Slice<UserDto>>() {
                         }.getType());
+                break;
             default:slice = modelMapper.map(userRepository.findAll(request),
                     new TypeToken<Slice<UserDto>>() {}.getType());
         }
