@@ -20,6 +20,7 @@ public class UserEntity {
     @Column(value = "last_name")
     private String lastName;
     private LocalDate birthday;
+    @Column(value = "username")
     private String username;
     private String details;
 

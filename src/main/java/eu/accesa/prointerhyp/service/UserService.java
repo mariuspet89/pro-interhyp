@@ -12,7 +12,7 @@ public interface UserService {
     @AllowFiltering
     UserDto findById(UUID id);
 
-    void deleteUser(UUID id);
+    void deleteUser(UUID id,String company);
 
     UserDto createUser(UserDto userDto);
 

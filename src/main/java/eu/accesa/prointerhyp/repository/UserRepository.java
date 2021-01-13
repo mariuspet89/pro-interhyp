@@ -14,4 +14,5 @@ public interface UserRepository extends CassandraRepository<UserEntity,UUID > {
     @AllowFiltering
     Optional<UserEntity> findById(UUID id);
 
+    void deleteByIdAndCompany(UUID uuid,String company);
 }

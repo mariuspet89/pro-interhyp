@@ -136,9 +136,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(UUID id) {
+    public void deleteUser(UUID id,String company) {
         LOGGER.info("Deleting the User with the following ID: " + id);
-        UserEntity userEntity = userRepository.findById(id).orElseThrow();
-        userRepository.delete(userEntity);
+
+        userRepository.deleteByIdAndCompany(id, company);
     }
 }
