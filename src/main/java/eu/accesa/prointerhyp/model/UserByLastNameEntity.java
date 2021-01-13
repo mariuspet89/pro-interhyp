@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 
-@Table(value = "users")
-public class UserEntity {
+@Table(value = "users_by_last_name")
+public class UserByLastNameEntity {
 
     @PrimaryKey
     private String company;
