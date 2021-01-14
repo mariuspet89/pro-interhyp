@@ -89,7 +89,8 @@ public class UserServiceImpl implements UserService {
         String filterKeyword = sortingAndFilteringDto.getFilterKeyword();
 
         CassandraPageRequest request = CassandraPageRequest.of(0, sortingAndFilteringDto.getItemsPerPage(),
-                Sort.Direction.fromString(sortingAndFilteringDto.getOrderDirection()));
+                Sort.Direction.fromString(sortingAndFilteringDto.getOrderDirection()),sortingAndFilteringDto.getSortByField());
+
 
         Slice<UserDto> slice;
 
