@@ -1,25 +1,28 @@
 package eu.accesa.prointerhyp.model;
 
+import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Table(value = "users")
-public class UserEntity {
 
-    @PrimaryKey
-    private UUID id;
-    @Column
+@Table(value = "users_by_birthday")
+public class UserByBirthdayEntity {
+
+    @PrimaryKeyColumn(name = "company", type = PrimaryKeyType.PARTITIONED)
     private String company;
+    @PrimaryKeyColumn(name = "id", type = PrimaryKeyType.PARTITIONED)
+    private UUID id;
     @Column(value = "first_name")
     private String firstName;
     @Column(value = "last_name")
     private String lastName;
+    @PrimaryKeyColumn(name = "birthday", type = PrimaryKeyType.CLUSTERED)
     private LocalDate birthday;
-    @Column(value = "username")
     private String username;
     private String details;
 

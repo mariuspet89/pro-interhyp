@@ -7,19 +7,19 @@ import org.springframework.data.cassandra.core.mapping.Table;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Table(value = "users")
-public class UserEntity {
+
+@Table(value = "users_by_first_name")
+public class UserByFirstNameEntity {
 
     @PrimaryKey
-    private UUID id;
-    @Column
     private String company;
+    @Column
+    private UUID id;
     @Column(value = "first_name")
     private String firstName;
     @Column(value = "last_name")
     private String lastName;
     private LocalDate birthday;
-    @Column(value = "username")
     private String username;
     private String details;
 
