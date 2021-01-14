@@ -3,8 +3,6 @@ package eu.accesa.prointerhyp.model.dto;
 public class SortingAndFilteringDto {
 
     private int itemsPerPage;
-    private String sortByField;
-    private String orderByField;
     private String orderDirection;
     private String filterKeyword;
 
@@ -16,21 +14,6 @@ public class SortingAndFilteringDto {
         this.itemsPerPage = itemsPerPage;
     }
 
-    public String getSortByField() {
-        return sortByField;
-    }
-
-    public void setSortByField(String sortByField) {
-        this.sortByField = sortByField;
-    }
-
-    public String getOrderByField() {
-        return orderByField;
-    }
-
-    public void setOrderByField(String orderByField) {
-        this.orderByField = orderByField;
-    }
 
     public String getOrderDirection() {
         return orderDirection;
@@ -52,8 +35,6 @@ public class SortingAndFilteringDto {
     public String toString() {
         return "SortingAndFilteringDto{" +
                 "itemsPerPage=" + itemsPerPage +
-                ", sortByField='" + sortByField + '\'' +
-                ", orderByField='" + orderByField + '\'' +
                 ", orderDirection='" + orderDirection + '\'' +
                 ", filterKeyword='" + filterKeyword + '\'' +
                 '}';

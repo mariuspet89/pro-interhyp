@@ -7,7 +7,6 @@ import org.springframework.data.cassandra.core.mapping.Table;
 import java.time.LocalDate;
 import java.util.UUID;
 
-
 @Table(value = "users")
 public class UserEntity {
 
