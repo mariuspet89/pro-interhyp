@@ -1,13 +1,11 @@
 package eu.accesa.prointerhyp.repository;
 
-import eu.accesa.prointerhyp.model.UserByBirthdayEntity;
 import eu.accesa.prointerhyp.model.UserByUserNameEntity;
 import org.springframework.data.cassandra.core.query.CassandraPageRequest;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.domain.Slice;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface UserByUserNameRepository extends CassandraRepository<UserByUserNameEntity, UUID> {

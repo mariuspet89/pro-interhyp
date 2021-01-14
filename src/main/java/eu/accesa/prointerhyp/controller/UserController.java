@@ -3,7 +3,6 @@ package eu.accesa.prointerhyp.controller;
 import eu.accesa.prointerhyp.model.dto.SortingAndFilteringDto;
 import eu.accesa.prointerhyp.model.dto.UserDto;
 import eu.accesa.prointerhyp.service.UserService;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,9 +38,15 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
     }
 
-    @GetMapping("/filtered")
+    @GetMapping("/filtered-find-all")
     public ResponseEntity<Slice<UserDto>> filteredFindAll(@RequestBody SortingAndFilteringDto sortingAndFilteringDto) {
         Slice<UserDto> userDtos = userService.filteredFindAll(sortingAndFilteringDto);
+        return ResponseEntity.status(HttpStatus.OK).body(userDtos);
+    }
+
+    @GetMapping("/filtered-find-by")
+    public ResponseEntity<List<UserDto>> filteredFindBy(@RequestBody SortingAndFilteringDto sortingAndFilteringDto) {
+        List<UserDto> userDtos = userService.findAllByDetails(sortingAndFilteringDto);
         return ResponseEntity.status(HttpStatus.OK).body(userDtos);
     }
 

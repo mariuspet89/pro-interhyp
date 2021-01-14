@@ -8,11 +8,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface UserRepository extends CassandraRepository<UserEntity,UUID > {
+public interface UserRepository extends CassandraRepository<UserEntity, UUID> {
 
     List<UserEntity> findAll();
+
     @AllowFiltering
     Optional<UserEntity> findById(UUID id);
 
-    void deleteByIdAndCompany(UUID uuid,String company);
+    @AllowFiltering
+    List<UserEntity> findAllByDetailsEquals(String request);
+
+    void deleteByIdAndCompany(UUID uuid, String company);
 }

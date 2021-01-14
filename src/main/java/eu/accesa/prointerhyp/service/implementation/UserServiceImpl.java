@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.cassandra.core.query.CassandraPageRequest;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -100,11 +101,20 @@ public class UserServiceImpl implements UserService {
                         new TypeToken<Slice<UserDto>>() {
                         }.getType());
         }
-
         if (slice == null) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "No entries found.");
         }
         return slice;
+    }
+
+    @Override
+    public List<UserDto> findAllByDetails(SortingAndFilteringDto sortingAndFilteringDto) {
+        CassandraPageRequest request = CassandraPageRequest.of(0, sortingAndFilteringDto.getItemsPerPage(),
+                Sort.Direction.ASC, sortingAndFilteringDto.getFilterKeyword());
+
+        return modelMapper.map(userRepository.findAllByDetailsEquals(sortingAndFilteringDto.getFilterKeyword()),
+                new TypeToken<List<UserDto>>() {
+                }.getType());
     }
 
     @Override

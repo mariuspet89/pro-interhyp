@@ -20,6 +20,8 @@ public interface UserService {
 
     List<UserDto> findAll();
 
+    List<UserDto> findAllByDetails(SortingAndFilteringDto sortingAndFilteringDto);
+
     Slice<UserDto> filteredFindAll(SortingAndFilteringDto sortingAndFilteringDto);
 
 }
