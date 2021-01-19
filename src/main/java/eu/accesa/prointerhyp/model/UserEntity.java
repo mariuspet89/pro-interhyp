@@ -7,7 +7,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Table(value = "users")
+@Table(value = "users1")
 public class UserEntity {
 
     @PrimaryKey
@@ -22,6 +22,17 @@ public class UserEntity {
     @Column(value = "username")
     private String username;
     private String details;
+
+    private AddressEntity address;
+
+
+    public AddressEntity getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressEntity address) {
+        this.address = address;
+    }
 
     public String getCompany() {
         return company;

@@ -1,5 +1,8 @@
 package eu.accesa.prointerhyp.model.dto;
 
+import eu.accesa.prointerhyp.model.AddressEntity;
+import org.openapitools.codegen.languages.AdaCodegen;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -12,6 +15,15 @@ public class UserDto {
     private String lastName;
     private LocalDate birthday;
     private String username;
+    private AddressEntity address;
+
+    public AddressEntity getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressEntity address) {
+        this.address = address;
+    }
 
     public String getCompany() {
         return company;
