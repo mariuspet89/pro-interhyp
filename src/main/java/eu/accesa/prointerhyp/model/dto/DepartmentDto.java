@@ -1,5 +1,6 @@
 package eu.accesa.prointerhyp.model.dto;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -8,7 +9,7 @@ public class DepartmentDto {
     private String name;
     private String description;
     private int size;
-    private UUID userId;
+    private List<UUID> userIds;
 
     public String getName() {
         return name;
@@ -34,12 +35,12 @@ public class DepartmentDto {
         this.size = size;
     }
 
-    public UUID getUserId() {
-        return userId;
+    public List<UUID> getUserIds() {
+        return userIds;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
+    public void setUserIds(List<UUID> userIds) {
+        this.userIds = userIds;
     }
 
     @Override
@@ -47,12 +48,12 @@ public class DepartmentDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DepartmentDto that = (DepartmentDto) o;
-        return size == that.size && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(userId, that.userId);
+        return size == that.size && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(userIds, that.userIds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, size, userId);
+        return Objects.hash(name, description, size, userIds);
     }
 
     @Override
@@ -61,7 +62,7 @@ public class DepartmentDto {
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", size=" + size +
-                ", userId=" + userId +
+                ", users=" + userIds +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package eu.accesa.prointerhyp.controller;
 
 import eu.accesa.prointerhyp.model.dto.DepartmentDto;
+import eu.accesa.prointerhyp.model.dto.UserDto;
 import eu.accesa.prointerhyp.model.dto.UserToDepartmentDto;
 import eu.accesa.prointerhyp.service.DepartmentService;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,13 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public ResponseEntity<List<DepartmentDto>> addUserToDepartment(@RequestBody UserToDepartmentDto dto) {
-        return ResponseEntity.status(HttpStatus.OK).body(departmentService.addUserToDepartment(dto.getDepartment(), dto.getUserId()));
+    public ResponseEntity<DepartmentDto> addUserToDepartment(@RequestBody UserToDepartmentDto dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(departmentService.addUserToDepartment(dto));
+    }
+
+    @GetMapping("/{users}")
+    public ResponseEntity<List<UserDto>> getAllUsersInDepartment(@PathVariable(value = "users") String department) {
+        return ResponseEntity.status(HttpStatus.OK).body(departmentService.getAllUsersInDepartment(department));
     }
 
     @DeleteMapping
