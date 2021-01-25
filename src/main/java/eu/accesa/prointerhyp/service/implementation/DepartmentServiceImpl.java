@@ -2,7 +2,7 @@ package eu.accesa.prointerhyp.service.implementation;
 
 import eu.accesa.prointerhyp.model.DepartmentEntity;
 import eu.accesa.prointerhyp.model.UserEntity;
-import eu.accesa.prointerhyp.model.dto.DepartmentDto;
+import eu.accesa.prointerhyp.model.dto.DepartmentDtoForGet;
 import eu.accesa.prointerhyp.model.dto.UserDto;
 import eu.accesa.prointerhyp.model.dto.UserToDepartmentDto;
 import eu.accesa.prointerhyp.repository.DepartmentRepository;
@@ -30,21 +30,43 @@ public class DepartmentServiceImpl implements DepartmentService {
         this.mapper = mapper;
     }
 
-    @Override
-    public List<UserDto> getAllUsersInDepartment(String department) {
-        //TODO create a user UDT and change users field in department table to list<user_type>.
-        //TODO After that, this method can return a DepartmentDto which contains department details and ->
-        //TODO a list of complete users with details in users field
 
-        List<UserDto> userDtos = new ArrayList<>();
-        for (UUID userId : departmentRepository.findByNameEquals(department).getUserIds()) {
-            userRepository.findById(userId).ifPresent(user -> userDtos.add(mapper.map(user, UserDto.class)));
+    @Override
+    public List<DepartmentDtoForGet> getAllDepartments() {
+        List<DepartmentEntity> departmentEntities = departmentRepository.findAll();
+        List<DepartmentDtoForGet> departmentDtos = new ArrayList<>();
+
+        for (DepartmentEntity department : departmentEntities){
+            departmentDtos.add(getAllUsersInDepartment(department.getName()));
         }
-        return userDtos;
+            return departmentDtos;
     }
 
     @Override
-    public DepartmentDto addUserToDepartment(UserToDepartmentDto dto) {
+    public void deleteDepartment(String departmentName) {
+        departmentRepository.deleteByName(departmentName);
+    }
+
+    @Override
+    public DepartmentDtoForGet getAllUsersInDepartment(String department) {
+        DepartmentEntity departmentEntity = departmentRepository.findByNameEquals(department);
+        List<UUID> userIds = departmentEntity.getUserIds();
+        List<UserDto> userDtos = new ArrayList<>();
+
+        if (userIds == null) userIds = new ArrayList<>();
+
+        for (UUID user : userIds) {
+            userRepository.findById(user)
+                    .ifPresent(userEntityFromRepo -> userDtos.add(mapper.map(userEntityFromRepo, UserDto.class)));
+        }
+        DepartmentDtoForGet departmentDto = mapper.map(departmentEntity, DepartmentDtoForGet.class);
+
+        departmentDto.setUserDtos(userDtos);
+        return departmentDto;
+    }
+
+    @Override
+    public DepartmentDtoForGet addUserToDepartment(UserToDepartmentDto dto) {
         DepartmentEntity departmentEntity = departmentRepository.findByNameEquals(dto.getDepartment());
         UserEntity userEntity = userRepository.findById(dto.getUserId()).orElse(null);
 
@@ -53,14 +75,13 @@ public class DepartmentServiceImpl implements DepartmentService {
             if (userIds == null) {
                 userIds = new ArrayList<>();
             }
-
             userIds.add(dto.getUserId());
             departmentEntity.setUserIds(userIds);
             departmentEntity.setSize(departmentEntity.getUserIds().size());
 
             departmentRepository.save(departmentEntity);
         }
-        return mapper.map(departmentRepository.findByNameEquals(dto.getDepartment()), DepartmentDto.class);
+        return getAllUsersInDepartment(dto.getDepartment());
     }
 
     @Override
@@ -77,6 +98,7 @@ public class DepartmentServiceImpl implements DepartmentService {
                     departmentEntity.setUserIds(userIds);
                     departmentEntity.setSize(departmentEntity.getUserIds().size());
                     departmentRepository.save(departmentEntity);
+                    break;
                 }
             }
         }

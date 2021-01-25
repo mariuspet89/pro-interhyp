@@ -22,3 +22,4 @@ public class UserToDepartmentDto {
         this.userId = userId;
     }
 }
+

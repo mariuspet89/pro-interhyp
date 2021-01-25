@@ -1,17 +1,20 @@
 package eu.accesa.prointerhyp.service;
 
-import eu.accesa.prointerhyp.model.dto.DepartmentDto;
-import eu.accesa.prointerhyp.model.dto.UserDto;
+import eu.accesa.prointerhyp.model.dto.DepartmentDtoForGet;
 import eu.accesa.prointerhyp.model.dto.UserToDepartmentDto;
 
 import java.util.List;
 
 public interface DepartmentService {
 
-    List<UserDto> getAllUsersInDepartment(String department);
+    DepartmentDtoForGet getAllUsersInDepartment(String department);
 
-    DepartmentDto addUserToDepartment(UserToDepartmentDto dto);
+    DepartmentDtoForGet addUserToDepartment(UserToDepartmentDto dto);
 
     void deleteUserFromDepartment(UserToDepartmentDto dto);
+
+    List<DepartmentDtoForGet> getAllDepartments();
+
+    void deleteDepartment(String departmentName);
 }
 

@@ -1,11 +1,14 @@
 package eu.accesa.prointerhyp.repository;
 
 import eu.accesa.prointerhyp.model.DepartmentEntity;
+import jnr.ffi.annotations.In;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 
 import java.util.UUID;
 
 public interface DepartmentRepository extends CassandraRepository<DepartmentEntity, UUID> {
 
-    DepartmentEntity findByNameEquals(String name);
+    DepartmentEntity findByNameEquals(String departmentName);
+
+    void deleteByName(String departmentName);
 }

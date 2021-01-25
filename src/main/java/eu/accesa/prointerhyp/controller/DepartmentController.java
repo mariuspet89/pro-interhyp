@@ -1,7 +1,6 @@
 package eu.accesa.prointerhyp.controller;
 
-import eu.accesa.prointerhyp.model.dto.DepartmentDto;
-import eu.accesa.prointerhyp.model.dto.UserDto;
+import eu.accesa.prointerhyp.model.dto.DepartmentDtoForGet;
 import eu.accesa.prointerhyp.model.dto.UserToDepartmentDto;
 import eu.accesa.prointerhyp.service.DepartmentService;
 import org.springframework.http.HttpStatus;
@@ -21,17 +20,27 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public ResponseEntity<DepartmentDto> addUserToDepartment(@RequestBody UserToDepartmentDto dto) {
+    public ResponseEntity<DepartmentDtoForGet> addUserToDepartment(@RequestBody UserToDepartmentDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(departmentService.addUserToDepartment(dto));
     }
 
+    @GetMapping
+    public ResponseEntity<List<DepartmentDtoForGet>> getAllDepartments(){
+        return ResponseEntity.status(HttpStatus.OK).body(departmentService.getAllDepartments());
+    }
+
     @GetMapping("/{users}")
-    public ResponseEntity<List<UserDto>> getAllUsersInDepartment(@PathVariable(value = "users") String department) {
+    public ResponseEntity<DepartmentDtoForGet> getAllUsersInDepartment(@PathVariable(value = "users") String department) {
         return ResponseEntity.status(HttpStatus.OK).body(departmentService.getAllUsersInDepartment(department));
     }
 
     @DeleteMapping
-    public void deleteUserFromDto(@RequestBody UserToDepartmentDto dto) {
+    public void deleteUserFromDepartment(@RequestBody UserToDepartmentDto dto) {
         departmentService.deleteUserFromDepartment(dto);
+    }
+
+    @DeleteMapping("/delete-department/{department}")
+    public void deleteDepartment(@PathVariable(value = "department") String departmentName) {
+        departmentService.deleteDepartment(departmentName);
     }
 }
