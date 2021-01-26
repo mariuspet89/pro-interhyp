@@ -1,6 +1,7 @@
 package eu.accesa.prointerhyp.repository;
 
 import eu.accesa.prointerhyp.model.UserEntity;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 
@@ -13,7 +14,7 @@ public interface UserRepository extends CassandraRepository<UserEntity, UUID> {
     List<UserEntity> findAll();
 
     @AllowFiltering
-    Optional<UserEntity> findById(UUID id);
+    Optional<UserEntity> findById(@NotNull UUID userId);
 
     void deleteByIdAndCompany(UUID uuid, String company);
 }

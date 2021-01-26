@@ -1,6 +1,8 @@
 package eu.accesa.prointerhyp.controller;
 
 import eu.accesa.prointerhyp.model.dto.UserDto;
+import eu.accesa.prointerhyp.model.dto.UserToDepartmentDto;
+import eu.accesa.prointerhyp.service.DepartmentService;
 import eu.accesa.prointerhyp.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +18,11 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
+    private final DepartmentService departmentService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, DepartmentService departmentService) {
         this.userService = userService;
+        this.departmentService = departmentService;
     }
 
     @PostMapping
@@ -42,7 +46,14 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}/{company}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") UUID id, @PathVariable("company") String company) {
+    public ResponseEntity<String> deleteUser(@PathVariable("id") UUID id, @PathVariable("company") String company,
+                                             @RequestBody String department) {
+        if (!department.equals("string")) {
+            UserToDepartmentDto dto = new UserToDepartmentDto();
+            dto.setDepartment(department);
+            dto.setUserId(id);
+            departmentService.deleteUserFromDepartment(dto);
+        }
         userService.deleteUser(id, company);
         return ResponseEntity.status(HttpStatus.OK).body("User Deleted");
     }
