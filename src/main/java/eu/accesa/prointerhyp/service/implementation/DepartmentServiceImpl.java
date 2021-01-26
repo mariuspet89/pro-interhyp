@@ -70,7 +70,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentDto addDepartment(DepartmentDto departmentDto) {
 
         DepartmentEntity departmentEntity = mapper.map(departmentDto, DepartmentEntity.class);
-        if (!departmentDto.getName().equals(departmentRepository.findByNameEquals(departmentDto.getName()))) {
+        if (!departmentDto.getName().equals(departmentRepository.findByNameEquals(departmentDto.getName()).getName())) {
             departmentEntity.setName(departmentDto.getName());
             departmentEntity.setSize((0));
         } else {
