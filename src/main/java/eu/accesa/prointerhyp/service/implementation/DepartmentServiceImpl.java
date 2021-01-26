@@ -2,6 +2,7 @@ package eu.accesa.prointerhyp.service.implementation;
 
 import eu.accesa.prointerhyp.model.DepartmentEntity;
 import eu.accesa.prointerhyp.model.UserEntity;
+import eu.accesa.prointerhyp.model.dto.DepartmentDto;
 import eu.accesa.prointerhyp.model.dto.DepartmentDtoForGet;
 import eu.accesa.prointerhyp.model.dto.UserDto;
 import eu.accesa.prointerhyp.model.dto.UserToDepartmentDto;
@@ -36,10 +37,10 @@ public class DepartmentServiceImpl implements DepartmentService {
         List<DepartmentEntity> departmentEntities = departmentRepository.findAll();
         List<DepartmentDtoForGet> departmentDtos = new ArrayList<>();
 
-        for (DepartmentEntity department : departmentEntities){
+        for (DepartmentEntity department : departmentEntities) {
             departmentDtos.add(getAllUsersInDepartment(department.getName()));
         }
-            return departmentDtos;
+        return departmentDtos;
     }
 
     @Override
@@ -63,6 +64,19 @@ public class DepartmentServiceImpl implements DepartmentService {
 
         departmentDto.setUserDtos(userDtos);
         return departmentDto;
+    }
+
+    @Override
+    public DepartmentDto addDepartment(DepartmentDto departmentDto) {
+
+        DepartmentEntity departmentEntity = mapper.map(departmentDto, DepartmentEntity.class);
+        if (!departmentDto.getName().equals(departmentRepository.findByNameEquals(departmentDto.getName()))) {
+            departmentEntity.setName(departmentDto.getName());
+            departmentEntity.setSize((0));
+        } else {
+            return mapper.map(departmentRepository.findByNameEquals(departmentDto.getName()), DepartmentDto.class);
+        }
+        return mapper.map(departmentRepository.save(departmentEntity), DepartmentDto.class);
     }
 
     @Override
