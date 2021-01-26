@@ -1,5 +1,6 @@
 package eu.accesa.prointerhyp.service;
 
+import eu.accesa.prointerhyp.model.dto.DepartmentDto;
 import eu.accesa.prointerhyp.model.dto.DepartmentDtoForGet;
 import eu.accesa.prointerhyp.model.dto.UserToDepartmentDto;
 
@@ -16,5 +17,8 @@ public interface DepartmentService {
     List<DepartmentDtoForGet> getAllDepartments();
 
     void deleteDepartment(String departmentName);
+
+    DepartmentDto addDepartment (DepartmentDto departmentDto);
+
 }
 

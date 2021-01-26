@@ -1,5 +1,6 @@
 package eu.accesa.prointerhyp.controller;
 
+import eu.accesa.prointerhyp.model.dto.DepartmentDto;
 import eu.accesa.prointerhyp.model.dto.DepartmentDtoForGet;
 import eu.accesa.prointerhyp.model.dto.UserToDepartmentDto;
 import eu.accesa.prointerhyp.service.DepartmentService;
@@ -23,6 +24,12 @@ public class DepartmentController {
     public ResponseEntity<DepartmentDtoForGet> addUserToDepartment(@RequestBody UserToDepartmentDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(departmentService.addUserToDepartment(dto));
     }
+
+    @PostMapping("/add-department")
+    public ResponseEntity<DepartmentDto> addDepartment(@RequestBody DepartmentDto departmentDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(departmentService.addDepartment(departmentDto));
+    }
+
 
     @GetMapping
     public ResponseEntity<List<DepartmentDtoForGet>> getAllDepartments(){
