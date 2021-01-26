@@ -1,7 +1,6 @@
 package eu.accesa.prointerhyp.repository;
 
 import eu.accesa.prointerhyp.model.DepartmentEntity;
-import jnr.ffi.annotations.In;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 
 import java.util.UUID;
