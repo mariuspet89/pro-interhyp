@@ -2,7 +2,7 @@ package eu.accesa.prointerhyp.model.dto;
 
 import java.util.List;
 
-public class DepartmentDtoForGet {
+public class DepartmentWithUsersDto {
 
     private String name;
     private String description;
