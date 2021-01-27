@@ -69,14 +69,14 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentDto addDepartment(DepartmentDto departmentDto) {
 
-        DepartmentEntity departmentEntity = mapper.map(departmentDto, DepartmentEntity.class);
-        if (!departmentDto.getName().equals(departmentRepository.findByNameEquals(departmentDto.getName()))) {
+        if (departmentRepository.findByNameEquals(departmentDto.getName().toUpperCase())!= null) {
+            return mapper.map(departmentRepository.findByNameEquals(departmentDto.getName().toUpperCase()), DepartmentDto.class);
+        } else {
+            DepartmentEntity departmentEntity = mapper.map(departmentDto, DepartmentEntity.class);
             departmentEntity.setName(departmentDto.getName());
             departmentEntity.setSize((0));
-        } else {
-            return mapper.map(departmentRepository.findByNameEquals(departmentDto.getName()), DepartmentDto.class);
+            return mapper.map(departmentRepository.save(departmentEntity), DepartmentDto.class);
         }
-        return mapper.map(departmentRepository.save(departmentEntity), DepartmentDto.class);
     }
 
     @Override
