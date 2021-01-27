@@ -46,15 +46,13 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}/{company}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") UUID id, @PathVariable("company") String company,
-                                             @RequestBody String department) {
-        if (!department.equals("string")) {
-            UserToDepartmentDto dto = new UserToDepartmentDto();
-            dto.setDepartment(department);
-            dto.setUserId(id);
-            departmentService.deleteUserFromDepartment(dto);
-        }
+    public ResponseEntity<String> deleteUser(@PathVariable("id") UUID id, @PathVariable("company") String company) {
+
+        UserToDepartmentDto department = new UserToDepartmentDto();
+        department.setDepartment(departmentService.findDepartmentByUserIdContaining(id).getName());
+        department.setUserId(id);
         userService.deleteUser(id, company);
+        departmentService.deleteUserFromDepartment(department);
         return ResponseEntity.status(HttpStatus.OK).body("User Deleted");
     }
 }
