@@ -5,6 +5,7 @@ import eu.accesa.prointerhyp.model.dto.DepartmentWithUsersDto;
 import eu.accesa.prointerhyp.model.dto.UserToDepartmentDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface DepartmentService {
 
@@ -19,6 +20,8 @@ public interface DepartmentService {
     void deleteDepartment(String departmentName);
 
     DepartmentDto addDepartment (DepartmentDto departmentDto);
+
+    DepartmentDto findDepartmentByUserIdContaining(UUID uuid);
 
 }
 

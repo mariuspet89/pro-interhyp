@@ -69,7 +69,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentDto addDepartment(DepartmentDto departmentDto) {
 
-        if (departmentRepository.findByNameEquals(departmentDto.getName().toUpperCase())!= null) {
+        if (departmentRepository.findByNameEquals(departmentDto.getName().toUpperCase()) != null) {
             return mapper.map(departmentRepository.findByNameEquals(departmentDto.getName().toUpperCase()), DepartmentDto.class);
         } else {
             DepartmentEntity departmentEntity = mapper.map(departmentDto, DepartmentEntity.class);
@@ -77,6 +77,11 @@ public class DepartmentServiceImpl implements DepartmentService {
             departmentEntity.setSize((0));
             return mapper.map(departmentRepository.save(departmentEntity), DepartmentDto.class);
         }
+    }
+
+    @Override
+    public DepartmentDto findDepartmentByUserIdContaining(UUID uuid) {
+        return mapper.map(departmentRepository.findByUserIdsContaining(uuid), DepartmentDto.class);
     }
 
     @Override
