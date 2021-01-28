@@ -4,6 +4,7 @@ import eu.accesa.prointerhyp.model.DepartmentEntity;
 import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface DepartmentRepository extends CassandraRepository<DepartmentEntity, UUID> {
@@ -12,5 +13,5 @@ public interface DepartmentRepository extends CassandraRepository<DepartmentEnti
 
     void deleteByName(String departmentName);
     @AllowFiltering
-    DepartmentEntity findByUserIdsContaining(UUID uuid);
+    Optional<DepartmentEntity> findByUserIdsContaining(UUID uuid);
 }

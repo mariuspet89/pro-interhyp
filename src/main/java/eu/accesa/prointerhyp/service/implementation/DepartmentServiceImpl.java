@@ -81,7 +81,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDto findDepartmentByUserIdContaining(UUID uuid) {
-        return mapper.map(departmentRepository.findByUserIdsContaining(uuid), DepartmentDto.class);
+        return mapper.map(departmentRepository.findByUserIdsContaining(uuid).
+                orElseThrow(()-> new NullPointerException("user is not enrolled in any Department...therefore it has been deleted from Users List")), DepartmentDto.class);
     }
 
     @Override

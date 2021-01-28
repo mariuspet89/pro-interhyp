@@ -1,8 +1,11 @@
 package eu.accesa.prointerhyp.service.implementation;
 
 import eu.accesa.prointerhyp.model.UserEntity;
+import eu.accesa.prointerhyp.model.dto.DepartmentDto;
 import eu.accesa.prointerhyp.model.dto.UserDto;
+import eu.accesa.prointerhyp.model.dto.UserToDepartmentDto;
 import eu.accesa.prointerhyp.repository.UserRepository;
+import eu.accesa.prointerhyp.service.DepartmentService;
 import eu.accesa.prointerhyp.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -21,11 +24,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final DepartmentService departmentService;
 
-    public UserServiceImpl(UserRepository userRepository,
-                           ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, DepartmentService departmentService) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.departmentService = departmentService;
     }
 
     @Override
@@ -70,7 +74,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(UUID id, String company) {
         LOGGER.info("Deleting the User with the following ID: " + id);
-
         userRepository.deleteByIdAndCompany(id, company);
+        DepartmentDto departmentDto=departmentService.findDepartmentByUserIdContaining(id);
+        if(departmentDto!=null){
+        UserToDepartmentDto department = new UserToDepartmentDto();
+        department.setDepartment(departmentDto.getName());
+        department.setUserId(id);
+        departmentService.deleteUserFromDepartment(department);}
     }
 }
