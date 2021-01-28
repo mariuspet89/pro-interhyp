@@ -1,5 +1,7 @@
 package eu.accesa.prointerhyp.service.implementation;
 
+import eu.accesa.prointerhyp.exeptions.EntityNotFoundException;
+import eu.accesa.prointerhyp.exeptions.ProInterhypExeptions;
 import eu.accesa.prointerhyp.model.DepartmentEntity;
 import eu.accesa.prointerhyp.model.UserEntity;
 import eu.accesa.prointerhyp.model.dto.DepartmentDto;
@@ -45,6 +47,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public void deleteDepartment(String departmentName) {
+        DepartmentEntity departmentEntity = departmentRepository.findByNameEquals(departmentName);
+        if (departmentEntity == null) {
+            throw new EntityNotFoundException("Department with the following name " + departmentName + " not found.");
+        }
         departmentRepository.deleteByName(departmentName);
     }
 
@@ -69,8 +75,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentDto addDepartment(DepartmentDto departmentDto) {
 
-        if (departmentRepository.findByNameEquals(departmentDto.getName().toUpperCase()) != null) {
-            return mapper.map(departmentRepository.findByNameEquals(departmentDto.getName().toUpperCase()), DepartmentDto.class);
+        if (departmentDto.getName().equals(departmentRepository.findByNameEquals(departmentDto.getName()).getName())) {
+            throw new ProInterhypExeptions("Department already exists ");
         } else {
             DepartmentEntity departmentEntity = mapper.map(departmentDto, DepartmentEntity.class);
             departmentEntity.setName(departmentDto.getName());
@@ -82,18 +88,23 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentDto findDepartmentByUserIdContaining(UUID uuid) {
         return mapper.map(departmentRepository.findByUserIdsContaining(uuid).
-                orElseThrow(()-> new NullPointerException("user is not enrolled in any Department...therefore it has been deleted from Users List")), DepartmentDto.class);
+                orElseThrow(()-> new EntityNotFoundException("User is not enrolled in any Department.")), DepartmentDto.class);
     }
 
     @Override
     public DepartmentWithUsersDto addUserToDepartment(UserToDepartmentDto dto) {
         DepartmentEntity departmentEntity = departmentRepository.findByNameEquals(dto.getDepartment());
-        UserEntity userEntity = userRepository.findById(dto.getUserId()).orElse(null);
+        UserEntity userEntity = userRepository.findById(dto.getUserId()).orElseThrow(() ->
+                new EntityNotFoundException("User with id: " + dto.getUserId() + " not found."));
 
         if (departmentEntity != null && userEntity != null) {
             List<UUID> userIds = departmentEntity.getUserIds();
+
             if (userIds == null) {
                 userIds = new ArrayList<>();
+            }
+            if(userIds.contains(dto.getUserId())){
+                throw new ProInterhypExeptions("User already exist into department.");
             }
             userIds.add(dto.getUserId());
             departmentEntity.setUserIds(userIds);
@@ -107,6 +118,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public void deleteUserFromDepartment(UserToDepartmentDto dto) {
         DepartmentEntity departmentEntity = departmentRepository.findByNameEquals(dto.getDepartment());
+        UserEntity userEntity = userRepository.findById(dto.getUserId()).orElseThrow(() ->
+                new EntityNotFoundException("User with id "+dto.getUserId()+" not found.") );
+
+        if( findDepartmentByUserIdContaining(dto.getUserId())==null){
+            throw new EntityNotFoundException("User is not enrolled in any department.");
+        }
 
         if (departmentEntity != null && !departmentEntity.getUserIds().isEmpty()) {
             List<UUID> userIds = departmentEntity.getUserIds();
