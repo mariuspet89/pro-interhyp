@@ -75,7 +75,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentDto addDepartment(DepartmentDto departmentDto) {
 
-        if (departmentDto.getName().equals(departmentRepository.findByNameEquals(departmentDto.getName()).getName())) {
+        if (departmentRepository.findByNameEquals(departmentDto.getName().toUpperCase()) != null) {
             throw new ProInterhypExeptions("Department already exists ");
         } else {
             DepartmentEntity departmentEntity = mapper.map(departmentDto, DepartmentEntity.class);
