@@ -31,7 +31,6 @@ public class DepartmentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(departmentService.addDepartment(departmentDto));
     }
 
-
     @GetMapping
     public ResponseEntity<List<DepartmentWithUsersDto>> getAllDepartments(){
         return ResponseEntity.status(HttpStatus.OK).body(departmentService.getAllDepartments());
@@ -43,12 +42,14 @@ public class DepartmentController {
     }
 
     @DeleteMapping
-    public void deleteUserFromDepartment(@RequestBody UserToDepartmentDto dto) {
+    public ResponseEntity<String> deleteUserFromDepartment(@RequestBody UserToDepartmentDto dto) {
         departmentService.deleteUserFromDepartment(dto);
+        return ResponseEntity.status(HttpStatus.OK).body("User has been deleted.");
     }
 
     @DeleteMapping("/delete-department/{department}")
-    public void deleteDepartment(@PathVariable(value = "department") String departmentName) {
+    public ResponseEntity<String> deleteDepartment(@PathVariable(value = "department") String departmentName) {
         departmentService.deleteDepartment(departmentName);
+        return ResponseEntity.status(HttpStatus.OK).body("Department has been deleted.");
     }
 }

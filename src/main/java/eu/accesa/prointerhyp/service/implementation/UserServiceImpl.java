@@ -1,5 +1,6 @@
 package eu.accesa.prointerhyp.service.implementation;
 
+import eu.accesa.prointerhyp.exeptions.EntityNotFoundException;
 import eu.accesa.prointerhyp.model.UserEntity;
 import eu.accesa.prointerhyp.model.dto.DepartmentDto;
 import eu.accesa.prointerhyp.model.dto.UserDto;
@@ -45,10 +46,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findById(UUID id) {
-        //TODO implement exception handling
         LOGGER.info("Searching for the User with the following ID: " + id);
 
-        UserEntity userEntity = userRepository.findById(id).orElseThrow();
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("User with id: " + id + " not found."));
         return modelMapper.map(userEntity, UserDto.class);
     }
 
@@ -64,7 +65,8 @@ public class UserServiceImpl implements UserService {
     public UserDto updateUser(UserDto userDto) {
         LOGGER.info("Updating User " + userDto.getId());
 
-        UserEntity userEntity = userRepository.findById(userDto.getId()).orElseThrow();
+        UserEntity userEntity = userRepository.findById(userDto.getId()).orElseThrow(() ->
+                new EntityNotFoundException("User with id: " + userDto.getId() + " not found."));
         modelMapper.map(userDto, userEntity);
         userRepository.save(userEntity);
 
@@ -74,6 +76,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(UUID id, String company) {
         LOGGER.info("Deleting the User with the following ID: " + id);
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("User with id: " + id + " not found."));
         userRepository.deleteByIdAndCompany(id, company);
         DepartmentDto departmentDto=departmentService.findDepartmentByUserIdContaining(id);
         if(departmentDto!=null){
