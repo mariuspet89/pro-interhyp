@@ -28,15 +28,6 @@ dependencies {
     compile 'io.springfox:springfox-swagger-ui:3.0.0'
     annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
 }
-
-sonarqube {
-    properties {
-        property "sonar.sourceEncoding", "UTF-8"
-        property "sonar.projectKey", "eu.accesa:prointerhyp"
-        property "sonar.sources", "src/main"
-    }
-}
-
 configurations {
     compile.exclude group: 'org.slf4j', module: 'slf4j-simple'
     jacocoTestReport {
